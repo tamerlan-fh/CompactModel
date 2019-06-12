@@ -1,8 +1,8 @@
 ﻿namespace CompactModel.Views
 {
-    public partial class MainWindow : System.Windows.Window
+    public partial class Form : System.Windows.Controls.UserControl
     {
-        public MainWindow()
+        public Form()
         {
             InitializeComponent();
         }

@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace CompactModel.ViewModels
 {
-    class RelayCommand : ICommand
+    internal class RelayCommand : ICommand
     {
         #region Fields
 

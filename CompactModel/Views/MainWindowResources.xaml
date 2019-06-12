@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:CompactModel.ViewModels"
+                    xmlns:local="clr-namespace:CompactModel.Views">
+
+    <DataTemplate DataType="{x:Type vm:ProcessContainerViewModel}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <local:Form/>
+        </ScrollViewer>
+    </DataTemplate>
+
+
+    <DataTemplate x:Key="TabItemTemplate">
+        <ContentPresenter Content="{Binding Path=DisplayName}" 
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Center" 
+                          MinWidth="100" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="WorkspacesTemplate">
+        <TabControl IsSynchronizedWithCurrentItem="True" 
+                    ItemsSource="{Binding}"
+                    ItemTemplate="{StaticResource TabItemTemplate}"
+                    Margin="4" 
+                    Background="White"/>
+    </DataTemplate>
+</ResourceDictionary>
