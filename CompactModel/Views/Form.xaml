@@ -57,170 +57,178 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="0">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" 
-                   Style="{StaticResource ProcessTextBlockStyle}"/>
+                <TextBlock Grid.Row="0" 
+                               Style="{StaticResource ProcessTextBlockStyle}"/>
 
-        <DataGrid Grid.Row="1"
-                  Style="{StaticResource DataGridStyle}"
-                  ItemsSource="{Binding Processes}" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Sign}" 
-                                    Header="Обозначение" 
-                                    Width="150" 
-                                    HeaderStyle="{StaticResource HeaderStyle}" 
-                                    IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    Header="Наименование" 
-                                    Width="*"
-                                    HeaderStyle="{StaticResource HeaderStyle}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid Grid.Row="1"
+                              Style="{StaticResource DataGridStyle}"
+                              ItemsSource="{Binding Processes}" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Sign}" 
+                                                Header="Обозначение" 
+                                                Width="150" 
+                                                HeaderStyle="{StaticResource HeaderStyle}" 
+                                                IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Header="Наименование" 
+                                                Width="*"
+                                                HeaderStyle="{StaticResource HeaderStyle}" />
+                    </DataGrid.Columns>
+                </DataGrid>
 
-        <TextBlock Grid.Row="2" 
-                   Style="{StaticResource TextBlockStyle}" 
-                   Text="Состояние процесса"/>
+                <TextBlock Grid.Row="2" 
+                               Style="{StaticResource TextBlockStyle}" 
+                               Text="Состояние процесса"/>
 
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Число состояний" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right" Margin="5,1"/>
-            <TextBox Name="StatusCount" 
-                     Text="4"
-                     Grid.Column="1" 
-                     VerticalAlignment="Center" TextAlignment="Center"
-                     Margin="1" Width="50"/>
-            <Button Content="Применить" Grid.Column="2"
-                    Command="{Binding SetProcessStatusCountCommand}" 
-                    CommandParameter="{Binding ElementName=StatusCount, Path=Text}" 
-                    Margin="1" Padding="20,1" 
-                    HorizontalAlignment="Left" />
-        </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Число состояний" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right" Margin="5,1"/>
+                    <TextBox Name="StatusCount" 
+                                 Text="4"
+                                 Grid.Column="1" 
+                                 VerticalAlignment="Center" TextAlignment="Center"
+                                 Margin="1" Width="50"/>
+                    <Button Content="Применить" Grid.Column="2"
+                                Command="{Binding SetProcessStatusCountCommand}" 
+                                CommandParameter="{Binding ElementName=StatusCount, Path=Text}" 
+                                Margin="1" Padding="20,1" 
+                                HorizontalAlignment="Left" />
+                </Grid>
 
-        <DataGrid Grid.Row="4"
-                  Style="{StaticResource DataGridStyle}"
-                  ItemsSource="{Binding ProcessStatuses, UpdateSourceTrigger=PropertyChanged}" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Sign}" 
-                                    Header="Обозначение" 
-                                    Width="150" 
-                                    HeaderStyle="{StaticResource HeaderStyle}" 
-                                    IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding Status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    Header="Состояние" 
-                                    Width="*"
-                                    HeaderStyle="{StaticResource HeaderStyle}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid Grid.Row="4"
+                              Style="{StaticResource DataGridStyle}"
+                              ItemsSource="{Binding ProcessStatuses, UpdateSourceTrigger=PropertyChanged}" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Sign}" 
+                                                Header="Обозначение" 
+                                                Width="150" 
+                                                HeaderStyle="{StaticResource HeaderStyle}" 
+                                                IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Header="Состояние" 
+                                                Width="*"
+                                                HeaderStyle="{StaticResource HeaderStyle}" />
+                    </DataGrid.Columns>
+                </DataGrid>
 
-        <TextBlock Grid.Row="5"
-                   Style="{StaticResource TextBlockStyle}" 
-                   Text="Информация дуг процесса"/>
+                <TextBlock Grid.Row="5"
+                               Style="{StaticResource TextBlockStyle}" 
+                               Text="Информация дуг процесса"/>
 
-        <Grid Grid.Row="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Число состояний" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right" Margin="5,1"/>
-            <TextBox Name="ArcCount" 
-                     Text="7"
-                     Grid.Column="1"
-                     VerticalAlignment="Center" TextAlignment="Center"
-                     Margin="1" Width="50"/>
-            <Button Content="Применить" Grid.Column="2"
-                    Command="{Binding SetArcProcessCountCommand}" 
-                    CommandParameter="{Binding ElementName=ArcCount, Path=Text}" 
-                    Margin="1" Padding="20,0" Height="24"
-                    HorizontalAlignment="Left" />
-        </Grid>
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Число состояний" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right" Margin="5,1"/>
+                    <TextBox Name="ArcCount" 
+                                 Text="7"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center" TextAlignment="Center"
+                                 Margin="1" Width="50"/>
+                    <Button Content="Применить" Grid.Column="2"
+                                Command="{Binding SetArcProcessCountCommand}" 
+                                CommandParameter="{Binding ElementName=ArcCount, Path=Text}" 
+                                Margin="1" Padding="20,0" Height="24"
+                                HorizontalAlignment="Left" />
+                </Grid>
 
-        <DataGrid Grid.Row="7"
-                  Style="{StaticResource DataGridStyle}"
-                  ItemsSource="{Binding ArcProcesses, UpdateSourceTrigger=PropertyChanged}" >
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type ComboBox}" x:Key="ComboBoxStyle">
-                    <Setter Property="ItemsSource" Value="{Binding ProcessStatuses, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
-                    <Setter Property="MinHeight" Value="22"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ArcSign}" 
-                                    Header="Дуга" 
-                                    MaxWidth="100" 
-                                    HeaderStyle="{StaticResource HeaderStyle}" 
-                                    IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding Priority, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    Header="Приоритет" 
-                                    Width="*"
-                                    HeaderStyle="{StaticResource HeaderStyle}" />
-                <DataGridTextColumn Binding="{Binding CSign}" 
-                                    Header="Символ алфавита C" 
-                                    MaxWidth="100" 
-                                    HeaderStyle="{StaticResource HeaderStyle}" 
-                                    IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding Message, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    Header="Сообщение" 
-                                    Width="*"
-                                    HeaderStyle="{StaticResource HeaderStyle}" />
-                <DataGridTextColumn Binding="{Binding ActivePredicateSign}" 
-                                    Header="Предикат активности" 
-                                    MaxWidth="100" 
-                                    HeaderStyle="{StaticResource HeaderStyle}" 
-                                    IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding Condition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    Header="Условие" 
-                                    Width="*"
-                                    HeaderStyle="{StaticResource HeaderStyle}" />
-                <DataGridComboBoxColumn Header="S_источник"
-                                        SelectedItemBinding="{Binding StatusSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                        DisplayMemberPath="Sign" 
-                                        ElementStyle="{StaticResource ComboBoxStyle}" 
-                                        EditingElementStyle="{StaticResource ComboBoxStyle}" 
-                                        Width="*"
-                                        HeaderStyle="{StaticResource HeaderStyle}"/>
-                <DataGridComboBoxColumn Header="S_назнач."
-                                        SelectedItemBinding="{Binding StatusTarget, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                        DisplayMemberPath="Sign" 
-                                        ElementStyle="{StaticResource ComboBoxStyle}" 
-                                        EditingElementStyle="{StaticResource ComboBoxStyle}" 
-                                        Width="*"
-                                        HeaderStyle="{StaticResource HeaderStyle}"/>
-                <DataGridTextColumn Binding="{Binding Start, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    Header="Запуск процесса" 
-                                    Width="*"
-                                    HeaderStyle="{StaticResource HeaderStyle}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Grid Grid.Row="8" HorizontalAlignment="Center" Margin="10">
+                <DataGrid Grid.Row="7"
+                              Style="{StaticResource DataGridStyle}"
+                              ItemsSource="{Binding ArcProcesses, UpdateSourceTrigger=PropertyChanged}" >
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type ComboBox}" x:Key="ComboBoxStyle">
+                            <Setter Property="ItemsSource" Value="{Binding ProcessStatuses, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                            <Setter Property="MinHeight" Value="22"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ArcSign}" 
+                                                Header="Дуга" 
+                                                MaxWidth="100" 
+                                                HeaderStyle="{StaticResource HeaderStyle}" 
+                                                IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Priority, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Header="Приоритет" 
+                                                Width="*"
+                                                HeaderStyle="{StaticResource HeaderStyle}" />
+                        <DataGridTextColumn Binding="{Binding CSign}" 
+                                                Header="Символ алфавита C" 
+                                                MaxWidth="100" 
+                                                HeaderStyle="{StaticResource HeaderStyle}" 
+                                                IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Message, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Header="Сообщение" 
+                                                Width="*"
+                                                HeaderStyle="{StaticResource HeaderStyle}" />
+                        <DataGridTextColumn Binding="{Binding ActivePredicateSign}" 
+                                                Header="Предикат активности" 
+                                                MaxWidth="100" 
+                                                HeaderStyle="{StaticResource HeaderStyle}" 
+                                                IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Condition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Header="Условие" 
+                                                Width="*"
+                                                HeaderStyle="{StaticResource HeaderStyle}" />
+                        <DataGridComboBoxColumn Header="S_источник"
+                                                    SelectedItemBinding="{Binding StatusSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                    DisplayMemberPath="Sign" 
+                                                    ElementStyle="{StaticResource ComboBoxStyle}" 
+                                                    EditingElementStyle="{StaticResource ComboBoxStyle}" 
+                                                    Width="*"
+                                                    HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <DataGridComboBoxColumn Header="S_назнач."
+                                                    SelectedItemBinding="{Binding StatusTarget, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                    DisplayMemberPath="Sign" 
+                                                    ElementStyle="{StaticResource ComboBoxStyle}" 
+                                                    EditingElementStyle="{StaticResource ComboBoxStyle}" 
+                                                    Width="*"
+                                                    HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <DataGridTextColumn Binding="{Binding Start, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Header="Запуск процесса" 
+                                                Width="*"
+                                                HeaderStyle="{StaticResource HeaderStyle}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </ScrollViewer>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="Добавить" 
-                    Margin="1" Padding="20,0" MinWidth="100" Height="24"/>
+            <Button Grid.Column="0" Content="Добавить" IsEnabled="False"
+                        Margin="1" Padding="20,0" MinWidth="100" Height="24"/>
             <Button Grid.Column="1" Content="Построить граф" 
-                    Command="{Binding GraphShowCommand}" 
-                    Margin="1" Padding="20,0" MinWidth="100" Height="24" />
-            <Button Grid.Column="2" Content="Далее" 
-                    Margin="1" Padding="20,0" MinWidth="100" Height="24"/>
+                        Command="{Binding GraphShowCommand}" 
+                        Margin="1" Padding="20,0" MinWidth="100" Height="24" />
+            <Button Grid.Column="2" Content="Далее" IsEnabled="False"
+                        Margin="1" Padding="20,0" MinWidth="100" Height="24"/>
         </Grid>
     </Grid>
 </UserControl>

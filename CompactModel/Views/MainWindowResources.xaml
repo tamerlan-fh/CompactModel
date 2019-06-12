@@ -4,9 +4,7 @@
                     xmlns:local="clr-namespace:CompactModel.Views">
 
     <DataTemplate DataType="{x:Type vm:ProcessContainerViewModel}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <local:Form/>
-        </ScrollViewer>
+        <local:Form VerticalAlignment="Stretch"/>
     </DataTemplate>
 
 

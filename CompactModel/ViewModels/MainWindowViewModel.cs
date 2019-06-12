@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows.Data;
 
 namespace CompactModel.ViewModels
@@ -10,9 +11,20 @@ namespace CompactModel.ViewModels
 
         public MainWindowViewModel()
         {
-            var workspace = new ProcessContainerViewModel(0);
-            Workspaces.Add(workspace);
-            SetActiveWorkspace(workspace);
+            SetProcessCountCommand = new RelayCommand(obj =>
+            {
+                if (int.TryParse(obj?.ToString(), out int count))
+                    SetProcessCount(count);
+            },
+            obj =>
+            {
+                if (obj is null) return false;
+                if (!int.TryParse(obj.ToString(), out int count))
+                    return false;
+                return CanSetProcessCount(count);
+            });
+
+            SetProcessCount(4);
         }
 
         public ObservableCollection<WorkspaceViewModel> Workspaces
@@ -55,5 +67,25 @@ namespace CompactModel.ViewModels
             if (collectionView != null)
                 collectionView.MoveCurrentTo(workspace);
         }
+
+        #region SetProcessCountCommand
+
+        public RelayCommand SetProcessCountCommand { get; }
+
+        private void SetProcessCount(int count)
+        {
+            Workspaces.Clear();
+            foreach (var workspace in Enumerable.Range(0, count).Select(index => new ProcessContainerViewModel((uint)index)))
+                Workspaces.Add(workspace);
+
+            SetActiveWorkspace(Workspaces.FirstOrDefault());
+        }
+
+        private bool CanSetProcessCount(int count)
+        {
+            return count > 1;
+        }
+
+        #endregion SetArcProcessCountCommand
     }
 }
