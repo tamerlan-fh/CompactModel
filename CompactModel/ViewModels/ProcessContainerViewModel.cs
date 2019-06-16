@@ -66,6 +66,13 @@ namespace CompactModel.ViewModels
         }
         private ArcProcessViewModel[] acProcesses;
 
+        public ProcessViewModel[] OtherProcesses
+        {
+            get { return otherProcesses; }
+            set { otherProcesses = value; OnPropertyChanged(nameof(OtherProcesses)); }
+        }
+        private ProcessViewModel[] otherProcesses;
+
         #region SetProcessStatusCountCommand
 
         public RelayCommand SetProcessStatusCountCommand { get; }
@@ -100,7 +107,7 @@ namespace CompactModel.ViewModels
 
         #region SaveCommand
 
-        public ICommand SaveCommand { get; } 
+        public ICommand SaveCommand { get; }
 
         private void Save()
         {
@@ -122,7 +129,7 @@ namespace CompactModel.ViewModels
         {
             var window = new Views.GraphWindow()
             {
-                Title = $"Граф {Process.Sign}",
+                Title = $"Граф процесса {Process.Sign}",
                 DataContext = new GraphViewModel(this)
             };
             window.Show();

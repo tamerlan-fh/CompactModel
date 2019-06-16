@@ -3,14 +3,17 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace CompactModel.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-
         public MainWindowViewModel()
         {
+            Workspaces = new ObservableCollection<WorkspaceViewModel>();
+            Workspaces.CollectionChanged += OnWorkspacesChanged;
+
             SetProcessCountCommand = new RelayCommand(obj =>
             {
                 if (int.TryParse(obj?.ToString(), out int count))
@@ -23,33 +26,50 @@ namespace CompactModel.ViewModels
                     return false;
                 return CanSetProcessCount(count);
             });
-
+            CompactGraphShowCommand = new RelayCommand(obj => CompactGraphShow(), obj => CanCompactGraphShow());
             SetProcessCount(4);
         }
 
-        public ObservableCollection<WorkspaceViewModel> Workspaces
-        {
-            get
-            {
-                if (workspaces == null)
-                {
-                    workspaces = new ObservableCollection<WorkspaceViewModel>();
-                    workspaces.CollectionChanged += OnWorkspacesChanged;
-                }
-                return workspaces;
-            }
-        }
-        private ObservableCollection<WorkspaceViewModel> workspaces;
+        public ObservableCollection<WorkspaceViewModel> Workspaces { get; }
 
         private void OnWorkspacesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
                 foreach (WorkspaceViewModel workspace in e.NewItems)
+                {
                     workspace.RequestClose += this.OnWorkspaceRequestClose;
-
+                }
             if (e.OldItems != null && e.OldItems.Count != 0)
                 foreach (WorkspaceViewModel workspace in e.OldItems)
+                {
                     workspace.RequestClose -= this.OnWorkspaceRequestClose;
+                }
+            SetOtherProcesses();
+        }
+
+        private void SetOtherProcesses()
+        {
+            var processes = Containers
+                .Select(x => x.Process)
+                .ToArray();
+
+            foreach (var process in Containers)
+            {
+                process.OtherProcesses = processes
+                    .Where(x => x != process.Process)
+                    .ToArray();
+            }
+        }
+
+        private ProcessContainerViewModel[] Containers
+        {
+            get
+            {
+                return Workspaces
+                    .Where(x => x is ProcessContainerViewModel)
+                    .Cast<ProcessContainerViewModel>()
+                    .ToArray();
+            }
         }
 
         private void OnWorkspaceRequestClose(object sender, EventArgs e)
@@ -70,7 +90,7 @@ namespace CompactModel.ViewModels
 
         #region SetProcessCountCommand
 
-        public RelayCommand SetProcessCountCommand { get; }
+        public ICommand SetProcessCountCommand { get; }
 
         private void SetProcessCount(int count)
         {
@@ -87,5 +107,26 @@ namespace CompactModel.ViewModels
         }
 
         #endregion SetArcProcessCountCommand
+
+        #region CompactGraphShowCommand
+
+        public ICommand CompactGraphShowCommand { get; }
+
+        private void CompactGraphShow()
+        {
+            var window = new Views.GraphWindow()
+            {
+                Title = $"Компактная модель",
+                DataContext = new GraphViewModel(Containers)
+            };
+            window.Show();
+        }
+
+        private bool CanCompactGraphShow()
+        {
+            return true;
+        }
+
+        #endregion CompactGraphShowCommand
     }
 }

@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -35,11 +36,18 @@
                     Margin="1" Padding="20,0" Height="24"
                     HorizontalAlignment="Left" />
         </Grid>
+
         <TabControl Grid.Row="1"
                     IsSynchronizedWithCurrentItem="True" 
                     ItemsSource="{Binding Workspaces}"
                     ItemTemplate="{StaticResource TabItemTemplate}"
                     Margin="4" 
                     Background="White"/>
+        <Button Content="Построить компактную модель" Grid.Row="2"  
+                Command="{Binding CompactGraphShowCommand}"
+                HorizontalAlignment="Center"
+                MinWidth="120"
+                Margin="1" Padding="20,0" Height="24"/>
+        <TextBlock Text="Образец" Opacity="0.5" Foreground="Red" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" FontWeight="Bold" Focusable="False" IsHitTestVisible="False"/>
     </Grid>
 </Window>

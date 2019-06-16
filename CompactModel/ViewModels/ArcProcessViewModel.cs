@@ -1,5 +1,6 @@
 ﻿using CompactModel.Helpers;
 using System.ComponentModel;
+using System.Linq;
 
 namespace CompactModel.ViewModels
 {
@@ -12,7 +13,7 @@ namespace CompactModel.ViewModels
             this.container = container;
             Index = index;
             ArcSign = $"d{FootnotesHelper.Parse(container.Index)}{FootnotesHelper.Parse(Index)}";
-            CSign = $"d{FootnotesHelper.Parse(container.Index)}{FootnotesHelper.Parse(Index)}";
+            CSign = $"C{FootnotesHelper.Parse(container.Index)}{FootnotesHelper.Parse(Index)}";
             ActivePredicateSign = $"P{FootnotesHelper.Parse(container.Index)}{FootnotesHelper.Parse(Index)}";
 
             container.PropertyChanged += ContainerPropertyChanged;
@@ -94,16 +95,27 @@ namespace CompactModel.ViewModels
         /// <summary>
         /// Запуск процесса
         /// </summary>
-        public string Start
+        public ProcessViewModel StartProcess
         {
-            get { return start; }
-            set { start = value; OnPropertyChanged(nameof(Start)); }
+            get { return startProcess; }
+            set
+            {
+                if (StartProcess == value)
+                    return;
+
+                startProcess = value; OnPropertyChanged(nameof(StartProcess));
+            }
         }
-        private string start;
+        private ProcessViewModel startProcess;
 
         public ProcessStatusViewModel[] ProcessStatuses
         {
             get { return container.ProcessStatuses; }
+        }
+
+        public ProcessViewModel[] Processes
+        {
+            get { return container.OtherProcesses; }
         }
     }
 }
