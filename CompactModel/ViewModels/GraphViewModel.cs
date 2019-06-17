@@ -1,5 +1,6 @@
 ﻿using CompactModel.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -116,7 +117,11 @@ namespace CompactModel.ViewModels
                         dc.DrawEllipse(null, pen, point + _vector, _radius, _radius);
                         DrawArrow(dc, point + _v, new Vector(0, -1));
 
-                        var textNoose = new FormattedText($"{nose.Max(x => x.Priority)}\r\n[{string.Join(";", nose.Select(x => x.ActivePredicateSign))}]\r\n[{string.Join(";", nose.Select(x => x.CSign))}]",
+                        var _nose = new List<ArcProcessViewModel>(nose);
+                        if (count > nose.Length)
+                            _nose.AddRange(new ArcProcessViewModel[count - 1 - nose.Length]);
+                        var start = point + vRadius;
+                        var textNoose = new FormattedText($"{nose.Max(x => x.Priority)}\r\n[{string.Join(";", _nose.Select(x => x?.ActivePredicateSign ?? "0"))}]\r\n[{string.Join(";", _nose.Select(x => x?.CSign ?? "0"))}]",
                             CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), mFont, pen.Brush, 60);
                         dc.DrawText(textNoose, point + new Vector(-1.5 * radius, 2 * radius));
                     }
@@ -132,11 +137,14 @@ namespace CompactModel.ViewModels
                         var arc = GetArcEx(index, index + 1);
                         if (arc.Any())
                         {
+                            var _arc = new List<ArcProcessViewModel>(arc);
+                            if (count > arc.Length)
+                                _arc.AddRange(new ArcProcessViewModel[count - 1 - arc.Length]);
                             var start = point + vRadius;
                             var end = point + vNextNode - vRadius;
                             dc.DrawLine(pen, start, end);
                             DrawArrow(dc, end, new Vector(vNextNode.X, vNextNode.Y));
-                            var textArc = new FormattedText($"{arc.Max(x => x.Priority)}\r\n[{string.Join(";", arc.Select(x => x.ActivePredicateSign))}]\r\n[{string.Join(";", arc.Select(x => x.CSign))}]",
+                            var textArc = new FormattedText($"{arc.Max(x => x.Priority)}\r\n[{string.Join(";", _arc.Select(x => x?.ActivePredicateSign ?? "0"))}]\r\n[{string.Join(";", _arc.Select(x => x?.CSign ?? "0"))}]",
                             CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), mFont, pen.Brush, 60);
                             dc.DrawText(textArc, point + new Vector(1.3 * radius, 0.3 * radius));
                         }
